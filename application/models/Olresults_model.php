@@ -1,72 +1,187 @@
-<?php 
-class Olresults_model extends CI_Model{
-    public function __construct(){
-        $this->load->database();
+<?php
+class Olresults extends CI_Controller{
+    public function index(){
+        $data['title'] = 'Enter O/L index number/numbers';
+
+        $this->load->view('templates/header');
+        $this->load->view('pages/ol',$data);
+        $this->load->view('templates/footer');
     }
 
-    public function get_olresults1($olind1 = FALSE){
-        if($olind1 == NULL && isset($_SESSION['olindex1']) && !empty($_SESSION['olindex1'])){
-            $olindex1 = $_SESSION['olindex1'];
-            $query1 = $this->db->get_where('ol_result', array('OL_index' => $olindex1));
 
-            return $query1->result_array();
-        }
-        $olindex1 = $this->input->post('index1');
-        $query1 = $this->db->get_where('ol_result', array('OL_index' => $olindex1));
-
-        return $query1->result_array();
-        // var_dump($query);
-    }
-
-    public function get_olresults2($olind2 = FALSE){
-        if($olind2 == NULL && isset($_SESSION['olindex2']) && !empty($_SESSION['olindex2'])){
-            $olindex2 = $_SESSION['olindex2'];
-            $query2 = $this->db->get_where('ol_result', array('OL_index' => $olindex2));
-
-            return $query2->result_array();
-        }
-        $olindex2 = $this->input->post('index2');
-        $query2 = $this->db->get_where('ol_result', array('OL_index' => $olindex2));
-
-        return $query2->result_array();
-        // var_dump($query);
-    }
-
-    public function get_olresults3($olind3 = FALSE){
-        if($olind3 == NULL && isset($_SESSION['olindex3']) && !empty($_SESSION['olindex3'])){
-            $olindex3 = $_SESSION['olindex3'];
-            $query3 = $this->db->get_where('ol_result', array('OL_index' => $olindex3));
+    public function checkolres($olind1 = NULL, $olind2 = NULL, $olind3 = NULL,$yea1=NULL,$yea2=NULL,$yea3=NULL){
+        $data['title'] = 'O/L Results sheet';
+        $this->form_validation->set_rules('year1','Ol Year','required|Integer');
+        $this->form_validation->set_rules('index1', 'Index Number', 'required|is_exist[stuents.olindex1]|is_exist[stuents.olindex2]|is_exist[stuents.olindex3]');
+        $this->form_validation->set_rules('year2','Ol Year','Integer');
+        $this->form_validation->set_rules('index2', 'Index Number', 'is_exist[stuents.olindex1]|is_exist[stuents.olindex2]|is_exist[stuents.olindex3]');
+        $this->form_validation->set_rules('year3','Ol Year','Integer');
+        $this->form_validation->set_rules('index3', 'Index Number', 'is_exist[stuents.olindex1]|is_exist[stuents.olindex2]|is_exist[stuents.olindex3]');
         
-            return $query3->result_array();
-        }
-        $olindex3 = $this->input->post('index3');
-        $query3 = $this->db->get_where('ol_result', array('OL_index' => $olindex3));
         
-        return $query3->result_array();
-        // var_dump($query);
+        // $this->form_validation->set_rules('year1', );
+
+        $this->form_validation->set_rules('sel1', 'Number of attempts', 'required');
+        
+        if($this->form_validation->run() === FALSE){
+            $data['title'] = 'Enter O/L index number/numbers';
+            $this->load->view('templates/header');
+            $this->load->view('pages/ol', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $year1 = $this->input->post('year1');
+            $olindex1 = $this->input->post('index1');
+            $year2 = $this->input->post('year2');
+            $olindex2 = $this->input->post('index2');
+            $year3 = $this->input->post('year3');
+            $olindex3 = $this->input->post('index3');
+            
+           
+           
+
+            $attempts = $this->input->post('sel1');
+            
+            if($olindex1 != "" && $year1 !=""){
+                $data['olresults1'] = $this->olresults_model-> get_olresults1($olind1,$yea1);
+            }
+            else if($olindex1 != ""){
+                $data['olresults1'] = '';
+                $olindex1 = 'N/A';
+               
+            }
+            else
+            {
+                $data['olresults1'] = '';
+                $year1= 'N/A';
+            }
+            if(($olindex2 != "" && $olindex2 != $olindex1) && ($year2 != "" && $year2 != $year1)){
+                $data['olresults2'] = $this->olresults_model-> get_olresults2($olind2,$yea2);
+                // var_dump($data['olresults2']);
+                if(!empty($data['olresults2'])){
+                    if($data['olresults2'][0]['year'] != $data['olresults1'][0]['year'] ){
+                    
+                    
+                    }
+                    
+                    else if ($olindex2 !="" && empty($data['olresults2'])){
+                        $data['olresults2'] = '';
+                        $olindex2 = 'N/A';
+                        
+                    }
+                    else{
+
+                        $data['olresults2'] = '';
+                        $year2 = 'N/A';
+                    }
+                    // var_dump($data['olresults2'][0]);
+                }  
+            }
+            else{
+                $data['olresults2'] = '';
+                $olindex2 = 'N/A';
+                $year2 = 'N/A';
+
+            }
+            if(($olindex2 != "" && $olindex3 != "" && $olindex3 != $olindex1 && $olindex3 != $olindex2) && ($year2 != "" && $year3 != "" && $year3 != $year1 && $year3 != $year2)){
+                $data['olresults3'] = $this->olresults_model-> get_olresults3($olind3,$yea3);   
+                if(!empty($data['olresults3']) && !empty($data['olresults2'])){
+                    if($data['olresults3'][0]['year'] != $data['olresults1'][0]['year'] && $data['olresults3'][0]['year'] != $data['olresults2'][0]['year']){
+                       
+                    }
+                    else{
+                        $data['olresults3'] = '';
+                        $olindex3 = 'N/A';
+                        $year3 = 'N/A';
+                    }
+                }
+            }
+            
+            else{
+                $data['olresults3'] = '';
+                $olindex3 = 'N/A';
+                $year3 = 'N/A';
+            }
+            // var_dump($olindex2);
+            if (($year1 != "N/A"  || $olindex1 !="N/A" )&& empty($data['olresults1'])){
+                echo "<script>alert('Please enter a valid year1 or Index1')</script>";
+                $data['title'] = 'Enter O/L index number/numbers';
+                $this->load->view('templates/header');
+                $this->load->view('pages/ol',$data);
+                $this->load->view('templates/footer');
+            }
+            else if (($year2 != "N/A"  || $olindex2 !="N/A" )&& empty($data['olresults2'])) {
+                echo "<script>alert('Please enter a valid year2 or Index2 ')</script>";
+                $data['title'] = 'Enter O/L index number/numbers';
+                $this->load->view('templates/header');
+                $this->load->view('pages/ol',$data);
+                $this->load->view('templates/footer');
+            }
+            elseif (($year3 != "N/A"  || $olindex3 !="N/A" )&& empty($data['olresults3'])) {
+                echo "<script>alert('Please enter a valid year3 or Index3')</script>";
+                $data['title'] = 'Enter O/L index number/numbers';
+                $this->load->view('templates/header');
+                $this->load->view('pages/ol',$data);
+                $this->load->view('templates/footer');
+            }
+          
+            
+        
+        
+            else{
+            // redirect('alresults');
+                $this->load->view('templates/header');
+                $this->load->view('pages/olresults',$data);
+                $this->load->view('templates/footer');
+            }
+
+
+
+            $this->session->set_userdata('year1', $year1);
+            $this->session->set_userdata('olindex1', $olindex1);
+            $this->session->set_userdata('year2', $year2);
+            $this->session->set_userdata('olindex2', $olindex2);
+            $this->session->set_userdata('year3', $year3);
+            $this->session->set_userdata('olindex3', $olindex3);
+            $this->session->set_userdata('attempts', $attempts);
+        }
+        // var_dump($data);
+        
     }
 
-    public function edit_ol1(){
-        $olindex1 = $this->input->post('olindex1');
-        $this->db->where('OL_index', $olindex1);
-        $query = $this->db->get('ol_result');
+    public function checkpirolres(){
 
-        return $query->result_array();
-    }
+        $this->form_validation->set_rules('year1','Ol Year','required|Integer');
+        $this->form_validation->set_rules('index1', 'Index Number', 'required|is_exist[stuents.olindex1]|is_exist[stuents.olindex2]|is_exist[stuents.olindex3]');
+        $this->form_validation->set_rules('year2','Ol Year','Integer');
+        $this->form_validation->set_rules('index2', 'Index Number', 'is_exist[stuents.olindex1]|is_exist[stuents.olindex2]|is_exist[stuents.olindex3]');
+        $this->form_validation->set_rules('year3','Ol Year','Integer');
+        $this->form_validation->set_rules('index3', 'Index Number', 'is_exist[stuents.olindex1]|is_exist[stuents.olindex2]|is_exist[stuents.olindex3]');
+        
+        
+        if($this->form_validation->run() === FALSE){
+            $data['title'] = 'Enter Mulika Pirivena index numbers';
+            $this->load->view('templates/header');
+            $this->load->view('pages/olpirivena', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $year1 = $this->input->post('year1');
+            $olindex1 = $this->input->post('index1');
+            $year2 = $this->input->post('year2');
+            $olindex2 = $this->input->post('index2');
+            $year3 = $this->input->post('year3');
+            $olindex3 = $this->input->post('index3');
+            $attempts = $this->input->post('sel1');
 
-    public function edit_ol2(){
-        $olindex2 = $this->input->post('olindex2');
-        $this->db->where('OL_index', $olindex2);
-        $query = $this->db->get('ol_result');
+            $this->session->set_userdata('year1', $year1);
+            $this->session->set_userdata('olindex1', $olindex1);
+            $this->session->set_userdata('year2', $year2);
+            $this->session->set_userdata('olindex2', $olindex2);
+            $this->session->set_userdata('year3', $year3);
+            $this->session->set_userdata('olindex3', $olindex3);
+            $this->session->set_userdata('attempts', $attempts);
+          
 
-        return $query->result_array();
-    }
-
-    public function edit_ol3(){
-        $olindex3 = $this->input->post('olindex3');
-        $this->db->where('OL_index', $olindex3);
-        $query = $this->db->get('ol_result');
-
-        return $query->result_array();
+            redirect('students/sripada');
+        }
     }
 }
