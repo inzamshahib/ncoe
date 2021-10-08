@@ -12,16 +12,21 @@ if($_SESSION['pdfdone'] == 1){
   if (!isset($_SESSION["alindex"])){
     redirect('/');
   }
-  // var_dump($_SESSION['pdfdone']);
+  var_dump($_SESSION['pdfdone']);
 
 ?>
   <h2><?= $title; ?></h2>
 <form action="<?php echo site_url(); ?>submission/submit" enctype="multipart/form-data" method="post" accept-charset="utf-8">
   <?php //echo form_open_multipart('submission/submit'); ?>
     <input type="hidden" value="<?php echo $_SESSION['alindex']; ?>" name="alindex">
+    <input type="hidden" value="<?php echo $_SESSION['year']; ?>" name="year">
+    <input type="hidden" value="<?php echo $_SESSION['syllabus']; ?>" name="syllabus">
     <input type="hidden" value="<?php echo $_SESSION['olindex1']; ?>" name="olindex1">
+    <input type="hidden" value="<?php echo $_SESSION['year1']; ?>" name="year1">
     <input type="hidden" value="<?php echo $_SESSION['olindex2']; ?>" name="olindex2">
+    <input type="hidden" value="<?php echo $_SESSION['year2']; ?>" name="year2">
     <input type="hidden" value="<?php echo $_SESSION['olindex3']; ?>" name="olindex3">
+    <input type="hidden" value="<?php echo $_SESSION['year3']; ?>" name="year3">
     <input type="hidden" value="<?php echo $_SESSION['sripada']; ?>" name="sripada">
     <input type="hidden" value="<?php echo $_SESSION['sworker']; ?>" name="sworker">
 
