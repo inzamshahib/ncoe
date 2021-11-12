@@ -1,4 +1,4 @@
-<h2><?= $title; ?></h2><br>
+h2><?= $title; ?></h2><br>
 <?php
   if (!isset($_SESSION["alindex"])){
     redirect('/');
@@ -36,8 +36,8 @@
     </div>
     <button type="submit" class="btn btn-info">Submit</button>
 </form> -->
-<a class="btn btn-primary" href="<?php echo site_url(); ?>/olresults">Check O/L exam results</a>  
-<a class="btn btn-primary" href="<?php echo site_url(); ?>/mulika_pirivena">Check Mulika Pirivena exam results </a>  
+<a class="btn btn-primary" href="<?php echo site_url(); ?>/olresults">Enter O/L exam results</a>  
+<a class="btn btn-primary" href="<?php echo site_url(); ?>/mulika_pirivena">Enter Mulika Pirivena exam results </a>  
   
 <br>
 <br>
