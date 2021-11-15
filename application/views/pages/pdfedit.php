@@ -472,7 +472,7 @@ ob_start();
                 
                 if($course['course_no'] == $select['pref1'] )
                 {      
-                    echo "<li>".$select['pref1']." - ".ucfirst($course['name'])."</li>";
+                    echo "<li>".$select['pref1']." - ".$course['name']."</li>";
                    
                 }
             }
@@ -480,14 +480,14 @@ ob_start();
         // foreach($selection as $select){
             foreach($courses as $course){ 
                 if($course['course_no'] == $select['pref2']){
-                    echo "<li>".$select['pref2']." - ".ucfirst($course['name'])."</li>";
+                    echo "<li>".$select['pref2']." - ".$course['name']."</li>";
                 }
             }
         // }
         // foreach($selection as $select){
             foreach($courses as $course){ 
                 if($course['course_no'] == $select['pref3']){
-                    echo "<li>".$select['pref3']." - ".ucfirst($course['name'])."</li>";
+                    echo "<li>".$select['pref3']." - ".$course['name']."</li>";
                     
                 }
             }
