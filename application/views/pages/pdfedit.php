@@ -402,7 +402,7 @@ ob_start();
             <?php } break; }; ?>
 
             <?php foreach($personal as $person){ ?>
-                <label for="olindex"><b>&nbsp;Index Number 3: </b><?php echo $person["OLindex3"]; ?><br><br>
+                <label for="olindex"><b>&nbsp;Index Number 3: </b><?php echo $person["OLindex3"]; ?><br>
             <?php }?>
             <?php foreach($olresults3 as $olresult3){ if( $olresult3["OL_index"] != "N/A"){?>
             <br>
@@ -462,7 +462,7 @@ ob_start();
             <?php } break; }; ?>
             
     <h2><b>&nbsp;&nbsp;06.Selected Courses: </b></h2>
-    <ol>
+    
     
         <?php 
 
@@ -471,8 +471,9 @@ ob_start();
             foreach($courses as $course){ 
                 
                 if($course['course_no'] == $select['pref1'] )
-                {      
-                    echo "<li>".$select['pref1']." - ".ucfirst($course['name'])."</li>";
+                {    
+                    echo "<br>";  
+                    echo "&nbsp;&nbsp;&nbsp;<b>Preference 1 : </b>".$select['pref1']." - ".ucfirst($course['name'])."<br>";
                    
                 }
             }
@@ -480,20 +481,22 @@ ob_start();
         // foreach($selection as $select){
             foreach($courses as $course){ 
                 if($course['course_no'] == $select['pref2']){
-                    echo "<li>".$select['pref2']." - ".ucfirst($course['name'])."</li>";
+
+                    echo "&nbsp;&nbsp;&nbsp;<b>Preference 2 : </b>".$select['pref2']." - ".ucfirst($course['name'])."<br>";
+                  
                 }
             }
         // }
         // foreach($selection as $select){
             foreach($courses as $course){ 
                 if($course['course_no'] == $select['pref3']){
-                    echo "<li>".$select['pref3']." - ".ucfirst($course['name'])."</li>";
+                    echo "&nbsp;&nbsp;&nbsp;<b>Preference 3 : </b>".$select['pref3']." - ".ucfirst($course['name'])."<br>";
                     
                 }
             }
         break; }
         ?>
-    </ol>
+    
     <?php
     foreach($personal as $person){ 
         // var_dump($person['pemarks']);
