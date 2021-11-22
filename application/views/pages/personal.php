@@ -14,21 +14,21 @@
   <div class="form-group">
   <?php // var_dump($_SESSION['sworker']); ?>
       <label for="fullname">Name in Full: <span style="color:red">* <?php echo form_error('fullname'); ?></span></label>
-      <input type="text" class="form-control" id="fullname" placeholder="Enter Your Full Name" name="fullname">
+      <input type="text" class="form-control" id="fullname" placeholder="Enter your full name" name="fullname">
       <label><i>Ex: Wasala Arachchilage Saman Kumara Rajapaksha</i></label>
     </div>
     <div class="form-group">
       <label for="namewithinitials">Name with Initials: <span style="color:red">* <?php echo form_error('namewithinitials'); ?></span></label>
-      <input type="text" class="form-control" id="namewithinitials" placeholder="Enter Your Name with Initials" name="namewithinitials">
+      <input type="text" class="form-control" id="namewithinitials" placeholder="Enter your name with Initials" name="namewithinitials">
       <label><i>Ex: Rajapaksha W.A.S.K. </i></label>
     </div>
     <div class="form-group">
-      <label for="dob">Date of Birth: <span style="color:red">* </span></label>
+      <label for="dob">Date of Birth: <span style="color:red">* <?php echo form_error('dob');?></span></label>
       <input type="date" class="form-control" id="dob"  name="dob">
     </div>
     <div class="form-group">
       <label for="address">Permanent Address: <span style="color:red">* <?php echo form_error('addressline1'); echo form_error('addressline2'); echo form_error('addressline3'); echo form_error('addressline4');?></span></label>
-    <input type="text" class="form-control" id="addressline1" placeholder="Street Address / P.O Box / Company Name" name="addressline1"><br>
+    <input type="text" class="form-control" id="addressline1" placeholder="Street address / P.O Box / Company name" name="addressline1"><br>
       <input type="text" class="form-control" id="addressline2" placeholder="Apartment / Suite / Unit / Building / Floor" name="addressline2"><br>
       <input type="text" class="form-control" id="addressline3" placeholder="City" name="addressline3"><br>
       <input type="text" class="form-control" id="addressline4" placeholder="Postal Code" name="addressline4"><br>
@@ -71,7 +71,7 @@
         <div class="col-sm-6">
             <div class="form-group">
              <label for="nic">NIC Number: <span style="color:red">* <?php echo form_error('nic'); ?></span></label>
-             <input type="text" class="form-control" id="nic" placeholder="Enter Your NIC" name="nic">
+             <input type="text" class="form-control" id="nic" placeholder="Enter your NIC" name="nic">
            </div>
         </div>
 
